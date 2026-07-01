@@ -26,6 +26,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.database.DownloadEntity
@@ -366,7 +367,12 @@ fun NotificationsScreen(
             }
         }
         val filter = IntentFilter("com.example.leaklab.NEW_NOTIFICATION")
-        context.registerReceiver(receiver, filter)
+        ContextCompat.registerReceiver(
+            context,
+            receiver,
+            filter,
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
         
         onDispose {
             // Detach observers on screen dispose
@@ -385,6 +391,7 @@ fun NotificationsScreen(
             Button(
                 onClick = {
                     val intent = Intent("com.example.leaklab.NEW_NOTIFICATION").apply {
+                        setPackage(context.packageName)
                         putExtra("title", "Lab Notification Logged")
                         putExtra("body", "Diagnostic node check recorded at: ${System.currentTimeMillis()}")
                     }
