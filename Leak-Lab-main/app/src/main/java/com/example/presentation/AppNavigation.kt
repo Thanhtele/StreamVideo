@@ -1,21 +1,38 @@
-package com.example.ui
+package com.example.presentation
 
 import android.app.AlertDialog
-import android.content.Context
 import android.view.View
 import android.widget.PopupWindow
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -25,8 +42,27 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.ui.screens.*
-import com.example.ui.theme.*
+import com.example.presentation.screens.auth.LoginScreen
+import com.example.presentation.screens.auth.RegisterScreen
+import com.example.presentation.screens.auth.SplashScreen
+import com.example.presentation.screens.dashboard.DashboardScreen
+import com.example.presentation.screens.dashboard.HomeScreen
+import com.example.presentation.screens.dashboard.ProfileScreen
+import com.example.presentation.screens.dashboard.SettingsScreen
+import com.example.presentation.screens.dashboard.UserDetailScreen
+import com.example.presentation.screens.hardware.BluetoothScreen
+import com.example.presentation.screens.hardware.CameraScreen
+import com.example.presentation.screens.hardware.GalleryScreen
+import com.example.presentation.screens.hardware.SearchScreen
+import com.example.presentation.screens.tasks.BackgroundSyncScreen
+import com.example.presentation.screens.tasks.ChatScreen
+import com.example.presentation.screens.tasks.DownloadsScreen
+import com.example.presentation.screens.tasks.NotificationsScreen
+import com.example.presentation.screens.tasks.StatisticsScreen
+import com.example.presentation.theme.CosmicSurface
+import com.example.presentation.theme.MidnightBlack
+import com.example.presentation.theme.NeonRuby
+import com.example.presentation.theme.TextGray
 
 object NavigationLeaks {
     // Active dialog reference mapping for global overlay management
@@ -42,7 +78,7 @@ object NavigationLeaks {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    
+
     NavHost(
         navController = navController,
         startDestination = "splash",
@@ -62,7 +98,7 @@ fun AppNavigation() {
                 }
             )
         }
-        
+
         composable("login") {
             LoginScreen(
                 onNavigateRegister = {
@@ -75,7 +111,7 @@ fun AppNavigation() {
                 }
             )
         }
-        
+
         composable("register") {
             RegisterScreen(
                 onNavigateLogin = {
@@ -88,7 +124,7 @@ fun AppNavigation() {
                 }
             )
         }
-        
+
         composable("main") {
             MainLayout(
                 onLogout = {
@@ -127,7 +163,8 @@ fun MainLayout(onLogout: () -> Unit) {
             val dialog = builder.create()
             NavigationLeaks.activeDialogRef = dialog
             dialog.show()
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+        }
     }
 
     Scaffold(
@@ -144,7 +181,7 @@ fun MainLayout(onLogout: () -> Unit) {
                     TabSpec("hardware", "Hardware", Icons.Filled.Refresh),
                     TabSpec("tasks", "Tasks", Icons.Filled.List)
                 )
-                
+
                 tabs.forEach { tab ->
                     NavigationBarItem(
                         selected = currentTab == tab.id,
@@ -215,6 +252,7 @@ fun MainLayout(onLogout: () -> Unit) {
                             }
                         }
                     }
+
                     "hardware" -> {
                         var hwSelection by rememberSaveable { mutableStateOf("bluetooth") }
                         Column {
@@ -246,6 +284,7 @@ fun MainLayout(onLogout: () -> Unit) {
                             }
                         }
                     }
+
                     "tasks" -> {
                         var taskSelection by rememberSaveable { mutableStateOf("downloads") }
                         Column {
