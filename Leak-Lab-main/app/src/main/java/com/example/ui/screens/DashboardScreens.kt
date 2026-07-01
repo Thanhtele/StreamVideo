@@ -118,6 +118,8 @@ class StatisticsViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         // Release active worker scheduling systems
+        timer?.cancel()
+        timer = null
     }
 }
 
