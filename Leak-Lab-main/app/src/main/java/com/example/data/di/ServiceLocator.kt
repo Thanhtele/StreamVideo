@@ -1,10 +1,12 @@
 package com.example.data.di
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.room.Room
 import com.example.data.database.AppDatabase
 import com.example.data.repository.*
 
+@SuppressLint("StaticFieldLeak")
 object ServiceLocator {
 
     // Internal context reference for localized database opening operations

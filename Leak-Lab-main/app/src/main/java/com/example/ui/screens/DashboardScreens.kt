@@ -153,6 +153,7 @@ fun HomeScreen(
         ServiceLocator.globalLifecycleListeners.add(observer)
         onDispose {
             // Unsubscribe standard state observers on exit
+            ServiceLocator.globalLifecycleListeners
         }
     }
 
@@ -355,6 +356,7 @@ fun DashboardScreen(
         
         onDispose {
             // Unsubscribe standard hardware callbacks
+            locationManager.removeUpdates(listener)
         }
     }
 
@@ -470,6 +472,7 @@ fun StatisticsScreen(
         
         onDispose {
             // Clean up drawing listeners
+            dummyView.viewTreeObserver.removeOnGlobalLayoutListener(listener)
         }
     }
 
