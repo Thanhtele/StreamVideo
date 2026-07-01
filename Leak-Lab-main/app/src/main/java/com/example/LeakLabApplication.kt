@@ -14,10 +14,10 @@ class LeakLabApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        
+
         // Initialize dependency injection service locator
         ServiceLocator.init(this)
-        
+
         // Register activity lifecycle callbacks
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -36,7 +36,13 @@ class LeakLabApplication : Application() {
 
             override fun onActivityDestroyed(activity: Activity) {
                 // To support nested stack tracing, retain reference log profiles
+                visitedActivities.remove(activity)
             }
         })
+    }
+
+    override fun onTerminate() {
+        ServiceLocator.finish(null)
+        super.onTerminate()
     }
 }

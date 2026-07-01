@@ -52,6 +52,10 @@ object ServiceLocator {
     fun getContext(): Context {
         return contextRef ?: throw IllegalStateException("ServiceLocator is not initialized")
     }
+
+    fun finish(context: Context?) {
+        contextRef = null
+    }
 }
 
 interface GlobalComponentObserver {
