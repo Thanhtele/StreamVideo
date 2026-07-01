@@ -1,0 +1,6 @@
+{
+  "name": "Leak Lab",
+  "description": "An advanced Android memory leak training laboratory containing 30+ production-grade leaks for debugging practice.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
