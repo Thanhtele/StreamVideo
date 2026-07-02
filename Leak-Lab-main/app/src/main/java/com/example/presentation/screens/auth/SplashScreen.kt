@@ -83,9 +83,10 @@ fun SplashScreen(
 
     LaunchedEffect(Unit) {
         val hasUser = ServiceLocator.userRepository != null
-        viewModel.startTimeout(context) {
+        viewModel.startTimeout() {
             //onNavigateLogin()
-            onNavigateHome()        }
+            onNavigateHome()
+        }
     }
 
     Box(

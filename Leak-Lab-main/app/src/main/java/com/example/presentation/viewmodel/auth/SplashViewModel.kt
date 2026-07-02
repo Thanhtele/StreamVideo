@@ -10,9 +10,6 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class SplashViewModel : ViewModel() {
     companion object {
-        // Cached context for resource loading and system utilities
-        var leakContext: Context? = null
-
         // Handler for splash transitions and timed event routing
         val handler = Handler(Looper.getMainLooper())
     }
@@ -20,15 +17,16 @@ class SplashViewModel : ViewModel() {
     private val _isFinished = MutableStateFlow(false)
     val isFinished: StateFlow<Boolean> = _isFinished.asStateFlow()
 
-    fun startTimeout(context: Context, onNavigate: () -> Unit) {
-        leakContext = context
-
+    fun startTimeout(onNavigate: () -> Unit) {
         // Dispatch splash duration timer to progress main application initialization
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                _isFinished.value = true
-                onNavigate()
-            }
+        handler.postDelayed({
+            _isFinished.value = true
+            onNavigate()
         }, 3000)
+    }
+
+    override fun onCleared() {
+        handler.removeCallbacksAndMessages(null)
+        super.onCleared()
     }
 }
