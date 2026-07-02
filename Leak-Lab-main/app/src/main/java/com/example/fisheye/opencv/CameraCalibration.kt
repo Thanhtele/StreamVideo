@@ -2,48 +2,45 @@ package com.example.fisheye.opencv
 
 import org.opencv.core.CvType
 import org.opencv.core.Mat
+import kotlin.math.tan
 
-/**
- * Camera calibration parameters.
- *
- * Demo version:
- * - Các giá trị hiện tại chỉ là placeholder.
- * - Sau này thay bằng kết quả calibration thực tế của camera.
- */
 object CameraCalibration {
     /**
-     * Camera resolution used during calibration.
-     *
-     * IMPORTANT:
-     * Input image phải cùng resolution này.
+     * Resolution used by the input fisheye image.
      */
-    const val IMAGE_WIDTH = 1600
-    const val IMAGE_HEIGHT = 1200
+    const val IMAGE_WIDTH = 3680
+    const val IMAGE_HEIGHT = 2945
 
     /**
-     * Camera intrinsic matrix
+     * Camera Intrinsic Matrix
      *
-     * | fx  0  cx |
-     * | 0  fy  cy |
-     * | 0   0   1 |
+     *      | fx  0  cx |
+     * K =  | 0  fy  cy |
+     *      | 0   0   1 |
+     *
+     * NOTE:
+     * Đây vẫn chỉ là DEMO.
+     * Sau này sẽ thay bằng kết quả calibration thật.
      */
     val K: Mat by lazy {
+        val fx = IMAGE_WIDTH / (2.0 * tan(Math.toRadians(140 / 2.0)))
+        val fy = IMAGE_HEIGHT / (2.0 * tan(Math.toRadians(115 / 2.0)))
+        val cx = IMAGE_WIDTH * 0.5
+        val cy = IMAGE_HEIGHT * 0.5
+
         Mat(3, 3, CvType.CV_64F).apply {
             put(
                 0,
                 0,
-                // fx
-                850.0,
-                // skew
+
+                fx,
                 0.0,
-                // cx
-                IMAGE_WIDTH / 2.0,
-                // fy
+                cx,
+
                 0.0,
-                850.0,
-                // cy
-                IMAGE_HEIGHT / 2.0,
-                // last row
+                fy,
+                cy,
+
                 0.0,
                 0.0,
                 1.0
@@ -52,14 +49,7 @@ object CameraCalibration {
     }
 
     /**
-     * Fisheye distortion coefficients
-     *
-     * OpenCV fisheye model:
-     *
-     * k1
-     * k2
-     * k3
-     * k4
+     * OpenCV fisheye distortion coefficients
      *
      * Demo values only.
      */

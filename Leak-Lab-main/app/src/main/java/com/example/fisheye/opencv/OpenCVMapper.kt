@@ -1,5 +1,6 @@
 package com.example.fisheye.opencv
 
+import android.util.Log
 import org.opencv.calib3d.Calib3d
 import org.opencv.core.CvType
 import org.opencv.core.Mat
@@ -33,7 +34,11 @@ object OpenCVMapper {
         }
 
         val r = buildRotationMatrix(camera)
+        Log.d("MAP","Rotation Matrix: ${r.dump()}")
+
         val p = buildProjectionMatrix(camera)
+        Log.d("MAP","Projection Matrix: ${p.dump()}")
+
         val map1 = Mat()
         val map2 = Mat()
 

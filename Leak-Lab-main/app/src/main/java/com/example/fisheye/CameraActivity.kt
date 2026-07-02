@@ -3,6 +3,7 @@ package com.example.fisheye
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -63,7 +64,9 @@ class CameraActivity : ComponentActivity() {
         ).copy(
             Bitmap.Config.ARGB_8888,
             false
-        )
+        ).also {
+            Log.d("MAP","Input Bitmap: ${it.width} x ${it.height}")
+        }
 
         //--------------------------------------------------
         // Output Bitmap (Create Once)
@@ -96,10 +99,12 @@ class CameraActivity : ComponentActivity() {
                         pitch = pitch,
                         roll = roll
                     )
+                    Log.d("MAP", "Render front: $frontCamera")
                     val frontMap = OpenCVMapper.create(
                         CameraCalibration,
                         frontCamera
                     )
+                    Log.d("MAP", "Render rear: $rearCamera")
                     val rearMap = OpenCVMapper.create(
                         CameraCalibration,
                         rearCamera
@@ -175,7 +180,7 @@ class CameraActivity : ComponentActivity() {
                         onValueChange = {
                             yaw = it.toDouble()
                         },
-                        valueRange = 0f..100f
+                        valueRange = -180f..100f
                     )
 
                     Text("Pitch : %.1f".format(pitch))
