@@ -40,6 +40,7 @@ firebaseBom = "34.15.0"
 secretsGradlePlugin = "2.0.1"
 googleServices = "4.5.0"
 leakcanary = "2.14"
+opencvContrib = "3.4.15"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -91,6 +92,8 @@ firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.r
 firebase-ai = { group = "com.google.firebase", name = "firebase-ai" }
 firebase-appcheck-recaptcha = { group = "com.google.firebase", name = "firebase-appcheck-recaptcha" }
 leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary" }
+#noinspection Aligned16KB
+opencv-contrib = { module = "com.quickbirdstudios:opencv-contrib", version.ref = "opencvContrib" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -102,4 +102,5 @@ dependencies {
     debugImplementation(libs.leakcanary)
     "ksp"(libs.androidx.room.compiler)
     "ksp"(libs.moshi.kotlin.codegen)
+    implementation(libs.opencv.contrib)
 }
