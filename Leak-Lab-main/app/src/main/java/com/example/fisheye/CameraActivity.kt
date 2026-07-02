@@ -42,7 +42,8 @@ data class RenderParam(
     val horizontalFov: Double,
     val verticalFov: Double,
     val yaw: Double,
-    val pitch: Double
+    val pitch: Double,
+    val roll: Double,
 )
 
 class CameraActivity : ComponentActivity() {
@@ -128,7 +129,8 @@ class CameraActivity : ComponentActivity() {
                             horizontalFov = horizontalFov,
                             verticalFov = verticalFov,
                             yaw = yaw,
-                            pitch = pitch
+                            pitch = pitch,
+                            roll = roll,
                         )
                     }.debounce(250)
                         .distinctUntilChanged()
