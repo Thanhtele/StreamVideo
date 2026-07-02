@@ -7,5 +7,13 @@ data class VirtualCamera(
     val verticalFov: Double,
     val yaw: Double,
     val pitch: Double,
-    val roll: Double
+    val roll: Double,
+    /**
+     * Principal point offset
+     *
+     * pixel
+     */
+    val centerOffsetX: Double = 0.0,
+
+    val centerOffsetY: Double = 0.0,
 )

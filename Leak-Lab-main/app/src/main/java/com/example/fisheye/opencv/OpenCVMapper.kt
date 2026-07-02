@@ -128,8 +128,8 @@ object OpenCVMapper {
     ): Mat {
         val fx = camera.outputWidth / (2.0 * tan(Math.toRadians(camera.horizontalFov / 2.0)))
         val fy = camera.outputHeight / (2.0 * tan(Math.toRadians(camera.verticalFov / 2.0)))
-        val cx = camera.outputWidth * 0.5
-        val cy = camera.outputHeight * 0.5
+        val cx = camera.outputWidth * 0.5 + camera.centerOffsetX
+        val cy = camera.outputHeight * 0.5 + camera.centerOffsetY
 
         return Mat(
             3,
